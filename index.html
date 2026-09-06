@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cat in Bags | 1</title>
+  <meta name="description" content="You don't need $1,000 to start investing. Just $1 is enough. Start small, stay consistent, and grow over time." />
+  <link rel="icon" href="logo.png" type="image/png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sol: {
+              purple: '#9945FF',
+              green: '#14F195',
+              cyan: '#00D1FF',
+              dark: '#0a0118',
+              card: '#120824',
+              border: '#2a1a4a',
+            }
+          },
+          fontFamily: {
+            display: ['Orbitron', 'system-ui', 'sans-serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            glow: '0 0 40px rgba(153, 69, 255, 0.35)',
+            'glow-green': '0 0 40px rgba(20, 241, 149, 0.3)',
+            'glow-sm': '0 0 20px rgba(153, 69, 255, 0.4)',
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            float: 'float 6s ease-in-out infinite',
+            'gradient-x': 'gradient-x 6s ease infinite',
+            shine: 'shine 3s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            'gradient-x': {
+              '0%, 100%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' },
+            },
+            shine: {
+              '0%': { backgroundPosition: '-200% center' },
+              '100%': { backgroundPosition: '200% center' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      background: #0a0118;
+      color: #e8e0ff;
+    }
+    .sol-bg {
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(153, 69, 255, 0.35), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(20, 241, 149, 0.12), transparent 50%),
+        radial-gradient(ellipse 50% 40% at 0% 80%, rgba(0, 209, 255, 0.1), transparent 50%),
+        #0a0118;
+    }
+    .grid-overlay {
+      background-image:
+        linear-gradient(rgba(153, 69, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(153, 69, 255, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, #14F195 0%, #00D1FF 40%, #9945FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .text-gradient-animate {
+      background: linear-gradient(90deg, #14F195, #00D1FF, #9945FF, #14F195);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-x 6s ease infinite;
+    }
+    .glass {
+      background: rgba(18, 8, 36, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(153, 69, 255, 0.25);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #9945FF 0%, #14F195 100%);
+      background-size: 200% 200%;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      background-position: 100% 0;
+      box-shadow: 0 0 30px rgba(20, 241, 149, 0.45), 0 0 60px rgba(153, 69, 255, 0.3);
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      border: 1px solid rgba(153, 69, 255, 0.6);
+      background: rgba(153, 69, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover {
+      border-color: #14F195;
+      background: rgba(20, 241, 149, 0.12);
+      box-shadow: 0 0 24px rgba(20, 241, 149, 0.25);
+      transform: translateY(-2px);
+    }
+    .step-card {
+      transition:
+        opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+    .step-card.is-visible:hover {
+      transform: translateY(-6px);
+      border-color: rgba(20, 241, 149, 0.5);
+      box-shadow: 0 12px 40px rgba(153, 69, 255, 0.2);
+    }
+    .strike-thick {
+      text-decoration: line-through;
+      text-decoration-thickness: 3px;
+      text-decoration-color: #ff4d6d;
+    }
+    .ca-box:hover {
+      border-color: rgba(20, 241, 149, 0.55);
+    }
+    .nav-blur {
+      background: rgba(10, 1, 24, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(153, 69, 255, 0.2);
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    #toast {
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .dex-frame {
+      border: 1px solid rgba(153, 69, 255, 0.35);
+      box-shadow: 0 0 40px rgba(153, 69, 255, 0.15);
+    }
+    #waterfall {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    /* Custom "1" cursor — white number only, no circle */
+    #cursor-1 {
+      position: fixed;
+      top: 0;
+      left: 0;
+      margin: -14px 0 0 -8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Orbitron, sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      line-height: 1;
+      color: #ffffff;
+      background: none;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      text-shadow:
+        0 0 8px rgba(255, 255, 255, 0.55),
+        0 1px 2px rgba(0, 0, 0, 0.45);
+      pointer-events: none;
+      z-index: 99999;
+      opacity: 0;
+      transform: translate3d(-100px, -100px, 0);
+      transition: opacity 0.15s ease, font-size 0.15s ease, text-shadow 0.15s ease;
+      will-change: transform;
+      user-select: none;
+    }
+    #cursor-1.is-on {
+      opacity: 1;
+    }
+    #cursor-1.is-hover {
+      font-size: 28px;
+      margin: -18px 0 0 -10px;
+      text-shadow:
+        0 0 12px rgba(255, 255, 255, 0.75),
+        0 0 20px rgba(20, 241, 149, 0.45);
+    }
+    #cursor-1.is-click {
+      font-size: 18px;
+      margin: -12px 0 0 -6px;
+      opacity: 0.85;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      body.custom-cursor,
+      body.custom-cursor a,
+      body.custom-cursor button,
+      body.custom-cursor [role="button"] {
+        cursor: none !important;
+      }
+    }
+    @media (hover: none), (pointer: coarse) {
+      #cursor-1 { display: none !important; }
+    }
+
+    /* Scroll reveal — one by one */
+    .reveal {
+      opacity: 0;
+      transform: translateY(48px);
+      transition:
+        opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      transform: translateX(-48px);
+    }
+    .reveal-left.is-visible {
+      transform: translateX(0);
+    }
+    .reveal-right {
+      transform: translateX(48px);
+    }
+    .reveal-right.is-visible {
+      transform: translateX(0);
+    }
+    .reveal-scale {
+      transform: scale(0.92);
+    }
+    .reveal-scale.is-visible {
+      transform: scale(1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      #cursor-1 { display: none !important; }
+      body.custom-cursor,
+      body.custom-cursor a,
+      body.custom-cursor button {
+        cursor: auto !important;
+      }
+    }
+  </style>
+</head>
+<body class="font-body sol-bg min-h-screen overflow-x-hidden custom-cursor">
+  <!-- Custom "1" cursor -->
+  <div id="cursor-1" aria-hidden="true">1</div>
+
+  <!-- Falling "1" waterfall background -->
+  <canvas id="waterfall" aria-hidden="true"></canvas>
+  <div class="fixed inset-0 grid-overlay pointer-events-none z-[1]"></div>
+  <div class="orb w-96 h-96 bg-sol-purple/40 -top-20 -left-20 fixed z-[1]"></div>
+  <div class="orb w-80 h-80 bg-sol-green/20 bottom-20 right-0 fixed z-[1]"></div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed top-24 left-1/2 -translate-x-1/2 z-[100] opacity-0 pointer-events-none glass px-6 py-3 rounded-full text-sol-green font-semibold shadow-glow-green text-sm sm:text-base">
+    Contract address copied!
+  </div>
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 z-50 nav-blur">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-18 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-2.5 group">
+        <img src="logo.png" alt="$1 logo" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl shadow-glow-sm group-hover:scale-105 transition-transform" />
+        <div class="leading-tight">
+          <span class="font-display font-bold text-sm sm:text-base text-gradient">$1</span>
+          <p class="text-[10px] sm:text-xs text-purple-300/70 hidden sm:block">is all you need</p>
+        </div>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-purple-200/80">
+        <a href="#about" class="hover:text-sol-green transition-colors">About</a>
+        <a href="#how-to-buy" class="hover:text-sol-green transition-colors">How to Buy</a>
+        <a href="#chart" class="hover:text-sol-green transition-colors">Chart</a>
+      </div>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a href="https://t.me/CatinBags_portal" target="_blank" rel="noopener noreferrer" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden hover:scale-110 transition-transform shadow-glow-sm" aria-label="Telegram">
+          <img src="tg.png" alt="Telegram" class="w-full h-full object-cover" />
+        </a>
+        <a href="https://x.com/CatinBagsX" target="_blank" rel="noopener noreferrer" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden hover:scale-110 transition-transform shadow-glow-sm" aria-label="X / Twitter">
+          <img src="x.png" alt="X" class="w-full h-full object-cover" />
+        </a>
+        <a href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=TBA" target="_blank" rel="noopener noreferrer" class="btn-primary text-white font-bold text-xs sm:text-sm px-3 sm:px-5 py-2 sm:py-2.5 rounded-full ml-1">
+          Buy Now
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="relative z-[2]">
+    <!-- Hero -->
+    <section id="home" class="pt-28 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6">
+      <div class="max-w-6xl mx-auto text-center">
+        <div class="reveal reveal-scale inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-8 text-xs sm:text-sm text-sol-green font-medium" style="--reveal-delay: 0ms">
+          <span class="w-2 h-2 rounded-full bg-sol-green animate-pulse"></span>
+          Live on Solana · Symbol: <span class="font-display font-bold text-white">1</span>
+        </div>
+
+        <div class="reveal reveal-scale flex justify-center mb-6" style="--reveal-delay: 100ms">
+          <img src="logo.png" alt="Cat in Bags logo" class="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-3xl shadow-glow animate-float" />
+        </div>
+
+        <h1 class="reveal font-display font-black text-4xl sm:text-5xl md:text-7xl tracking-tight mb-4" style="--reveal-delay: 200ms">
+          <span class="text-gradient-animate">Cat in Bags</span>
+        </h1>
+
+        <p class="reveal text-lg sm:text-xl md:text-2xl text-purple-100/90 max-w-2xl mx-auto font-medium mb-3" style="--reveal-delay: 320ms">
+          You don't need
+          <span class="strike-thick text-red-400/90 font-bold">$1,000</span>
+          to start investing.
+        </p>
+        <p class="reveal text-base sm:text-lg text-purple-200/70 max-w-xl mx-auto mb-10 leading-relaxed" style="--reveal-delay: 420ms">
+          Just <span class="text-sol-green font-bold">$1</span> is enough. Start small, stay consistent, and grow over time.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8" style="--reveal-delay: 520ms">
+          <a href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=TBA" target="_blank" rel="noopener noreferrer" class="btn-primary w-full sm:w-auto text-white font-bold text-base sm:text-lg px-8 py-3.5 rounded-2xl shadow-glow">
+            Buy Now
+          </a>
+          <a href="https://dexscreener.com/solana/TBA" target="_blank" rel="noopener noreferrer" class="btn-outline w-full sm:w-auto text-white font-bold text-base sm:text-lg px-8 py-3.5 rounded-2xl">
+            Chart
+          </a>
+        </div>
+
+        <!-- Contract Address -->
+        <div class="reveal max-w-xl mx-auto" style="--reveal-delay: 640ms">
+          <p class="text-xs uppercase tracking-widest text-purple-300/60 mb-2 font-semibold">Contract Address</p>
+          <button type="button" onclick="copyCA()" class="ca-box glass w-full flex items-center justify-between gap-3 px-4 sm:px-5 py-3.5 rounded-2xl cursor-pointer group transition-all">
+            <code id="ca-text" class="text-sol-cyan text-xs sm:text-sm font-mono truncate text-left flex-1">TBA</code>
+            <span class="flex items-center gap-2 shrink-0 text-purple-200 group-hover:text-sol-green transition-colors text-sm font-semibold">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              <span class="hidden sm:inline">Copy</span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Banner -->
+    <section class="px-4 sm:px-6 pb-16 sm:pb-20">
+      <div class="max-w-5xl mx-auto">
+        <div class="reveal reveal-scale relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-glow border border-sol-purple/30">
+          <img src="banner.png" alt="Cat in Bags banner" class="w-full h-auto object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-sol-dark/60 via-transparent to-transparent pointer-events-none"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About / Narrative -->
+    <section id="about" class="px-4 sm:px-6 pb-20 sm:pb-28">
+      <div class="max-w-6xl mx-auto">
+        <div class="glass rounded-3xl p-8 sm:p-12 md:p-14 relative overflow-hidden">
+          <div class="absolute -right-16 -top-16 w-64 h-64 bg-sol-purple/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute -left-10 bottom-0 w-48 h-48 bg-sol-green/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="relative grid md:grid-cols-2 gap-10 items-center">
+            <div class="reveal reveal-left">
+              <h2 class="font-display font-bold text-3xl sm:text-4xl mb-4">
+                <span class="text-gradient">The $1 Mindset</span>
+              </h2>
+              <p class="text-purple-100/80 text-base sm:text-lg leading-relaxed mb-4">
+                You don't need <span class="strike-thick text-red-400/80">$1,000</span> to start investing.
+                Just <strong class="text-sol-green">$1</strong> is enough.
+              </p>
+              <p class="text-purple-200/60 leading-relaxed mb-6">
+                Start small, stay consistent, and grow over time. On Solana, every dollar can move at light speed —
+                and <span class="text-white font-semibold">Cat in Bags</span> to join the movement.
+              </p>
+              <div class="flex flex-wrap gap-3">
+                <span class="glass px-4 py-2 rounded-full text-sm text-sol-green font-semibold">⚡ Solana Native</span>
+                <span class="glass px-4 py-2 rounded-full text-sm text-sol-cyan font-semibold">💎 Symbol: 1</span>
+                <span class="glass px-4 py-2 rounded-full text-sm text-sol-purple font-semibold">🚀 Community First</span>
+              </div>
+            </div>
+            <div class="reveal reveal-right flex justify-center" style="--reveal-delay: 160ms">
+              <div class="relative">
+                <div class="absolute inset-0 bg-gradient-to-br from-sol-purple to-sol-green rounded-full blur-2xl opacity-40 scale-110"></div>
+                <img src="logo.png" alt="$1 logo large" class="relative w-48 h-48 sm:w-56 sm:h-56 rounded-3xl shadow-glow" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How to Buy -->
+    <section id="how-to-buy" class="px-4 sm:px-6 pb-20 sm:pb-28">
+      <div class="max-w-6xl mx-auto">
+        <div class="reveal text-center mb-12 sm:mb-16">
+          <p class="text-sol-green text-sm font-semibold tracking-widest uppercase mb-3">Simple · Fast · Solana</p>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-gradient mb-4">How to Buy</h2>
+          <p class="text-purple-200/60 max-w-lg mx-auto">Get $1 in four easy steps using SOL. No gatekeeping. Just $1 is enough.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+          <!-- Step 1 -->
+          <div class="reveal step-card glass rounded-2xl p-6 sm:p-7 relative" style="--reveal-delay: 0ms">
+            <div class="absolute -top-3 -left-1 font-display font-black text-6xl text-sol-purple/20 select-none">01</div>
+            <div class="relative">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sol-purple to-sol-green flex items-center justify-center mb-5 shadow-glow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-white mb-2">Get a Wallet</h3>
+              <p class="text-purple-200/60 text-sm leading-relaxed">
+                Download <strong class="text-purple-100">Phantom</strong> or <strong class="text-purple-100">Solflare</strong>. Create a free Solana wallet in under a minute.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="reveal step-card glass rounded-2xl p-6 sm:p-7 relative" style="--reveal-delay: 120ms">
+            <div class="absolute -top-3 -left-1 font-display font-black text-6xl text-sol-purple/20 select-none">02</div>
+            <div class="relative">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sol-purple to-sol-green flex items-center justify-center mb-5 shadow-glow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-white mb-2">Add Some SOL</h3>
+              <p class="text-purple-200/60 text-sm leading-relaxed">
+                Buy SOL on any major exchange, then send it to your wallet. Even a little SOL is enough to start.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="reveal step-card glass rounded-2xl p-6 sm:p-7 relative" style="--reveal-delay: 240ms">
+            <div class="absolute -top-3 -left-1 font-display font-black text-6xl text-sol-purple/20 select-none">03</div>
+            <div class="relative">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sol-purple to-sol-green flex items-center justify-center mb-5 shadow-glow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-white mb-2">Open the Swap</h3>
+              <p class="text-purple-200/60 text-sm leading-relaxed">
+                Hit <strong class="text-sol-green">Buy Now</strong> to open pump.fun swap. Connect your wallet and select SOL → <strong class="text-white">1</strong>.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="reveal step-card glass rounded-2xl p-6 sm:p-7 relative" style="--reveal-delay: 360ms">
+            <div class="absolute -top-3 -left-1 font-display font-black text-6xl text-sol-purple/20 select-none">04</div>
+            <div class="relative">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sol-purple to-sol-green flex items-center justify-center mb-5 shadow-glow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 class="font-display font-bold text-lg text-white mb-2">Swap for $1</h3>
+              <p class="text-purple-200/60 text-sm leading-relaxed">
+                Enter the amount, confirm the swap, and you're in. Welcome to the family — <strong class="text-sol-green">Cat in Bags</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal text-center mt-12" style="--reveal-delay: 200ms">
+          <a href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=TBA" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center gap-2 text-white font-bold text-base sm:text-lg px-10 py-4 rounded-2xl shadow-glow">
+            Buy $1 Now
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chart / Dexscreener -->
+    <section id="chart" class="px-4 sm:px-6 pb-20 sm:pb-28">
+      <div class="max-w-6xl mx-auto">
+        <div class="reveal text-center mb-10 sm:mb-12">
+          <p class="text-sol-cyan text-sm font-semibold tracking-widest uppercase mb-3">Live Market</p>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-gradient mb-4">Chart</h2>
+          <p class="text-purple-200/60 max-w-lg mx-auto mb-6">Track $1 price action in real time on Dexscreener.</p>
+          <a href="https://dexscreener.com/solana/TBA" target="_blank" rel="noopener noreferrer" class="btn-outline inline-flex items-center gap-2 text-white font-semibold text-sm px-6 py-2.5 rounded-full">
+            Open on Dexscreener
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+
+        <div class="reveal reveal-scale dex-frame rounded-2xl sm:rounded-3xl overflow-hidden bg-sol-card" style="--reveal-delay: 150ms">
+          <iframe
+            id="dex-embed"
+            title="Dexscreener Chart for $1"
+            src="https://dexscreener.com/solana/TBA?embed=1&theme=dark&trades=0&info=0"
+            class="w-full border-0"
+            style="height: 620px; min-height: 420px;"
+            loading="lazy"
+            allow="clipboard-write"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join CTA -->
+    <section class="px-4 sm:px-6 pb-20 sm:pb-28">
+      <div class="reveal max-w-4xl mx-auto text-center glass rounded-3xl p-10 sm:p-14 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-sol-purple/20 via-transparent to-sol-green/10 pointer-events-none"></div>
+        <div class="relative">
+          <img src="logo.png" alt="" class="w-16 h-16 mx-auto mb-6 rounded-2xl shadow-glow-sm" />
+          <h2 class="font-display font-bold text-2xl sm:text-4xl text-white mb-3">Join the $1 Army</h2>
+          <p class="text-purple-200/70 mb-8 max-w-md mx-auto">
+            Community is everything. Hop into Telegram &amp; X — because <span class="text-sol-green font-semibold">Cat in Bags</span>.
+          </p>
+          <div class="flex flex-wrap items-center justify-center gap-4">
+            <a href="https://t.me/CatinBags_portal" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 glass hover:border-sol-green/50 px-6 py-3 rounded-2xl transition-all hover:-translate-y-1">
+              <img src="tg.png" alt="Telegram" class="w-8 h-8 rounded-full" />
+              <span class="font-semibold text-white">Telegram</span>
+            </a>
+            <a href="https://x.com/CatinBagsX" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 glass hover:border-sol-green/50 px-6 py-3 rounded-2xl transition-all hover:-translate-y-1">
+              <span class="w-8 h-8 rounded-full overflow-hidden shrink-0">
+                <img src="x.png" alt="X" class="w-full h-full object-cover" />
+              </span>
+              <span class="font-semibold text-white">Twitter / X</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative z-[2] border-t border-sol-purple/20 py-10 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <img src="logo.png" alt="" class="w-9 h-9 rounded-lg" />
+        <div>
+          <p class="font-display font-bold text-sm text-gradient">Cat in Bags</p>
+          <p class="text-xs text-purple-300/50">Symbol: 1 · Powered by Solana</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="https://t.me/CatinBags_portal" target="_blank" rel="noopener noreferrer" class="opacity-80 hover:opacity-100 hover:scale-110 transition-all" aria-label="Telegram">
+          <img src="tg.png" alt="Telegram" class="w-8 h-8 rounded-full" />
+        </a>
+        <a href="https://x.com/CatinBagsX" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full overflow-hidden opacity-80 hover:opacity-100 hover:scale-110 transition-all" aria-label="X">
+          <img src="x.png" alt="X" class="w-full h-full object-cover" />
+        </a>
+        <a href="https://dexscreener.com/solana/TBA" target="_blank" rel="noopener noreferrer" class="text-xs text-purple-300/60 hover:text-sol-green transition-colors font-medium">Chart</a>
+        <a href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=TBA" target="_blank" rel="noopener noreferrer" class="text-xs text-purple-300/60 hover:text-sol-green transition-colors font-medium">Buy</a>
+      </div>
+      <p class="text-[11px] text-purple-300/40 text-center sm:text-right max-w-xs">
+        $1 is a meme coin. NFA · DYOR. Crypto is volatile — never invest more than you can afford to lose.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const CONTRACT_ADDRESS = 'TBA';
+
+    function copyCA() {
+      const text = CONTRACT_ADDRESS;
+      const showToast = () => {
+        const toast = document.getElementById('toast');
+        toast.classList.remove('opacity-0', 'pointer-events-none');
+        toast.classList.add('opacity-100');
+        setTimeout(() => {
+          toast.classList.add('opacity-0', 'pointer-events-none');
+          toast.classList.remove('opacity-100');
+        }, 2000);
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(showToast).catch(fallbackCopy);
+      } else {
+        fallbackCopy();
+      }
+
+      function fallbackCopy() {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showToast();
+        } catch (e) {}
+        document.body.removeChild(ta);
+      }
+    }
+
+    /* ===== Custom "1" Cursor ===== */
+    (function initCursor() {
+      const cursor = document.getElementById('cursor-1');
+      if (!cursor) return;
+      const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+      if (!fine.matches) return;
+
+      let x = -100, y = -100;
+      let visible = false;
+
+      const move = (e) => {
+        x = e.clientX;
+        y = e.clientY;
+        cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        if (!visible) {
+          visible = true;
+          cursor.classList.add('is-on');
+        }
+      };
+
+      document.addEventListener('mousemove', move, { passive: true });
+      document.addEventListener('mouseleave', () => {
+        cursor.classList.remove('is-on', 'is-hover', 'is-click');
+        visible = false;
+      });
+      document.addEventListener('mouseenter', () => {
+        cursor.classList.add('is-on');
+        visible = true;
+      });
+      document.addEventListener('mousedown', () => cursor.classList.add('is-click'));
+      document.addEventListener('mouseup', () => cursor.classList.remove('is-click'));
+
+      // Event delegation so dynamically-styled hover works on all interactive targets
+      document.addEventListener('mouseover', (e) => {
+        if (e.target.closest('a, button, [role="button"], .ca-box, input, textarea, label')) {
+          cursor.classList.add('is-hover');
+        }
+      });
+      document.addEventListener('mouseout', (e) => {
+        if (e.target.closest('a, button, [role="button"], .ca-box, input, textarea, label')) {
+          cursor.classList.remove('is-hover');
+        }
+      });
+    })();
+
+    /* ===== Scroll reveal — show elements one by one ===== */
+    (function initReveal() {
+      const els = document.querySelectorAll('.reveal');
+      if (!els.length) return;
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        els.forEach((el) => el.classList.add('is-visible'));
+        return;
+      }
+
+      // Stagger siblings that share a parent (e.g. step cards) when no delay set
+      const groups = new Map();
+      els.forEach((el) => {
+        if (el.style.getPropertyValue('--reveal-delay')) return;
+        const parent = el.parentElement;
+        if (!parent) return;
+        if (!groups.has(parent)) groups.set(parent, []);
+        groups.get(parent).push(el);
+      });
+      groups.forEach((list) => {
+        if (list.length < 2) return;
+        list.forEach((el, i) => {
+          el.style.setProperty('--reveal-delay', `${i * 120}ms`);
+        });
+      });
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
+      );
+
+      els.forEach((el) => io.observe(el));
+    })();
+
+    /* ===== Proper "1" Matrix Waterfall (sparse & clean) ===== */
+    (function initWaterfall() {
+      const canvas = document.getElementById('waterfall');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      const FONT = 36; // *2 size vs prior 18px
+      const GAP = 48; // slightly wider columns for larger glyphs
+      const COLORS = {
+        head: 'rgba(230, 255, 245, 0.9)',
+        purple: 'rgba(153, 69, 255,',
+        green: 'rgba(20, 241, 149,',
+        cyan: 'rgba(0, 209, 255,',
+      };
+
+      let width = 0;
+      let height = 0;
+      let drops = [];
+      let dpr = 1;
+
+      function makeDrop(x, scatter) {
+        const hue = Math.random();
+        const colorBase = hue < 0.45 ? COLORS.purple : hue < 0.85 ? COLORS.green : COLORS.cyan;
+        return {
+          x,
+          // start staggered so they don't all fall together
+          y: scatter ? Math.random() * -height * 1.5 : -(Math.random() * height * 0.4 + 20),
+          // cells per frame (slow, readable cascade)
+          speed: 0.35 + Math.random() * 0.45,
+          // short trail — classic rain, not a solid bar
+          length: 6 + ((Math.random() * 8) | 0),
+          colorBase,
+          // shorter pauses so streams refresh ~2x more often
+          delay: scatter ? ((Math.random() * 80) | 0) : 0,
+          wait: 20 + ((Math.random() * 60) | 0),
+        };
+      }
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        // ~2x columns active vs previous sparse setup
+        const maxCols = Math.max(6, Math.floor(width / GAP));
+        const active = Math.max(6, Math.floor(maxCols * 0.9));
+        const indices = [];
+        for (let i = 0; i < maxCols; i++) indices.push(i);
+        // shuffle pick
+        for (let i = indices.length - 1; i > 0; i--) {
+          const j = (Math.random() * (i + 1)) | 0;
+          [indices[i], indices[j]] = [indices[j], indices[i]];
+        }
+        const chosen = indices.slice(0, active).sort((a, b) => a - b);
+        // two streams per column offset slightly (*2 waterfall count)
+        drops = [];
+        chosen.forEach((col) => {
+          const baseX = col * GAP + GAP * 0.5;
+          drops.push(makeDrop(baseX, true));
+          drops.push(makeDrop(baseX + (Math.random() - 0.5) * 10, true));
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        ctx.font = `600 ${FONT}px Orbitron, monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+
+        const step = FONT + 10;
+
+        for (let i = 0; i < drops.length; i++) {
+          const d = drops[i];
+
+          if (d.delay > 0) {
+            d.delay--;
+            continue;
+          }
+
+          d.y += d.speed;
+
+          for (let t = 0; t < d.length; t++) {
+            const ty = d.y * step - t * step;
+            if (ty < -step || ty > height + step) continue;
+
+            if (t === 0) {
+              ctx.fillStyle = COLORS.head;
+              ctx.shadowColor = 'rgba(20, 241, 149, 0.5)';
+              ctx.shadowBlur = 6;
+            } else {
+              const fade = 0.4 * (1 - t / d.length);
+              ctx.shadowBlur = 0;
+              ctx.fillStyle = d.colorBase + fade.toFixed(3) + ')';
+            }
+            ctx.fillText('1', d.x, ty);
+          }
+          ctx.shadowBlur = 0;
+
+          if (d.y * step - d.length * step > height + 40) {
+            const next = makeDrop(d.x, false);
+            next.delay = d.wait;
+            drops[i] = next;
+          }
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      requestAnimationFrame(draw);
+    })();
+  </script>
+</body>
+</html>
